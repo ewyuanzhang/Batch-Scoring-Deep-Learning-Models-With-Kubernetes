@@ -22,7 +22,7 @@ def postprocess(mount_dir, video_name):
 
     # stitch frames to generate new video with ffmpeg
     subprocess.run(
-        "ffmpeg -framerate 30 -i {}/%06d_frame.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p -y {}".format(
+        'ffmpeg -framerate 30 -i {}/%06d_frame.jpg -c:v libx264 -profile:v high -crf 20 -pix_fmt yuv420p -y {}'.format(
             os.path.join(mount_dir, video_name, Storage.OUTPUT_DIR.value),
             os.path.join(mount_dir, video_name, video_without_audio),
         ),

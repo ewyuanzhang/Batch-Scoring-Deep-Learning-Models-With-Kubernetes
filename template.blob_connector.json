@@ -18,7 +18,7 @@
             "type": "Microsoft.Web/connections",
             "name": "azureblob",
             "apiVersion": "2016-06-01",
-            "location": "eastus",
+            "location": "[parameters('location')]",
             "scale": null,
             "properties": {
                 "displayName": "batchscoringdlsa",

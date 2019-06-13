@@ -1,8 +1,9 @@
 
 # Batch Scoring Deep Learning Models With Kubernetes
+Based on [Batch Scoring Deep Learning Models With AKS](https://github.com/Azure/Batch-Scoring-Deep-Learning-Models-With-AKS)
 
 ## Overview
-In this repository, we use the scenario of applying style transfer onto a video (collection of images). This architecture can be generalized for any batch scoring with deep learning scenario. For an alternative solution using Azure Machine Learning service, we suggest seeing the solution available [here](https://github.com/Azure/Batch-Scoring-Deep-Learning-Models-With-AML) which is also described on the [Azure Reference Architecture center](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/ai/batch-scoring-deep-learning).
+In this repository, we use the scenario of applying vehicle detection onto a video (collection of images). This architecture can be generalized for any batch scoring with deep learning scenario.
 
 ## Design
 ![Reference Architecture Diagram](https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/batchscoringdl-aks-architecture-diagram.PNG)
@@ -15,12 +16,6 @@ The above architecture works as follows:
 5. The other nodes in the AKS cluster are continuously polling the Service Bus queue - as soon as any images are in the queue, it will pull it off the queue and apply style transfer to the image.
 6. When all frames have been processed, the images will be stitched back together into a video with the audio file.
 
-### What is Neural Style Transfer 
-
-| Style image: | Input/content video: | Output video: | 
-|--------|--------|---------|
-| <img src="https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/style_image.jpg" width="300"> | [<img src="https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/input_video_image_0.jpg" width="300" height="300">](https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/input_video.mp4 "Input Video") *click to view video* | [<img src="https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/output_video_image_0.jpg" width="300" height="300">](https://happypathspublic.blob.core.windows.net/assets/batch_scoring_for_dl/output_video.mp4 "Output Video") *click to view* |
-
 ## Prerequsites
 
 Local/Working Machine:
@@ -32,7 +27,6 @@ Local/Working Machine:
 - [Azure CLI >=2.0](https://docs.microsoft.com/en-us/cli/azure/?view=azure-cli-latest)
 
 Accounts:
-- [Dockerhub account](https://hub.docker.com/)
 - [Azure Subscription](https://azure.microsoft.com/en-us/free/) 
 - (Optional) A [quota](https://docs.microsoft.com/en-us/azure/azure-supportability/resource-manager-core-quotas-request) for GPU-enabled VMs
 
@@ -45,15 +39,14 @@ While it is not required, it is also useful to use the [Azure Storage Explorer](
 3. Setup your conda env using the _environment.yml_ file `conda env create -f environment.yml` - this will create a conda environment called __batchscoringdl__
 4. Activate your environment `source activate batchscoringdl`
 5. Log in to Azure using the __az cli__ `az login`
-6. Log in to Docker using the docker cli `docker login`
 
 ## Steps
 Run throught the following notebooks:
-1. [Test the Style Transfer Script](/00_test_neural_style_transfer.ipynb)
+1. [Test the vechicle detection script](/00_test_neural_vehicle_detection.ipynb)
 2. [Setup Azure - Resource group, Storage, Service Bus](/01_setup_azure.ipynb).
 3. [Test the model locally](./02_local_testing.ipynb)
 4. [Create the AKS cluster](./03_create_aks_cluster.ipynb)
-5. [Run style transfer on the cluster](./04_style_transfer_on_aks.ipynb)
+5. [Run vehicle detection on the cluster](./04_vehicle_detection_on_aks.ipynb)
 6. [Deploy Logic Apps](./05_deploy_logic_app.ipynb)
 7. [Clean up](./06_clean_up.ipynb)
 
@@ -62,18 +55,4 @@ To clean up your working directory, you can run the `clean_up.sh` script that co
 
 To clean up your Azure resources, you can simply delete the resource group that all your resources were deployed into. This can be done in the `az cli` using the command `az group delete --name <name-of-your-resource-group>`, or in the portal. If you want to keep certain resources, you can also use the `az cli` or the Azure portal to cherry pick the ones you want to deprovision. Finally, you should also delete the service principle using the `az ad sp delete` command. 
 
-All the step above are covered in the final [notebook](./05_clean_up.ipynb).
-
-# Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+All the step above are covered in the final [notebook](./06_clean_up.ipynb).

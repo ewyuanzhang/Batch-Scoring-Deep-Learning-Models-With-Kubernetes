@@ -118,7 +118,7 @@ def _process(video):
 
     logger.debug("Preprocessing video finished.... Time taken in seconds: {:.2f}".format(t1 - t0))
     logger.debug("Adding image to queue finished.. Time taken in seconds: {:.2f}".format(t2 - t1))
-    logger.debug("Style transfer.................. Time taken in seconds: {:.2f}".format(t3 - t2))
+    logger.debug("Detecting vehicles.............. Time taken in seconds: {:.2f}".format(t3 - t2))
     logger.debug("Postprocessing video finished... Time taken in seconds: {:.2f}".format(t4 - t3))
     logger.debug("Total process................... Time taken in seconds: {:.2f}".format(t5 - t0))
 

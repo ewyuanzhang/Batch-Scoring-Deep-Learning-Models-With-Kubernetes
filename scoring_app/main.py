@@ -76,7 +76,7 @@ if __name__ == "__main__":
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setFormatter(handler_format)
     logger = logging.getLogger("root")
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG) # logger.setLevel(logging.INFO)
     logger.addHandler(console_handler)
     logger.propagate = False
 

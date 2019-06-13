@@ -1,5 +1,5 @@
 import ast
-import style_transfer
+import detect_vehicle
 import pathlib
 import datetime
 import time
@@ -52,7 +52,7 @@ def dequeue(bus_service, model_dir, queue, mount_dir, terminate=None):
                 time.sleep(60)
                 continue
 
-        # get style, input_frame, input_dir & output_dir from msg body
+        # get video_name, input_frame, input_dir & output_dir from msg body
         msg_body = ast.literal_eval(msg.body.decode("utf-8"))
 
         input_frame = msg_body["input_frame"]
@@ -69,14 +69,14 @@ def dequeue(bus_service, model_dir, queue, mount_dir, terminate=None):
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
 
-        # create a new file handler for style transfer logs
+        # create a new file handler for vehicle detection logs
         log_file = "{}.log".format(input_frame.split(".")[0])
         add_file_handler(logger, os.path.join(log_dir, log_file))
         logger.debug("Queue message body: {}".format(msg_body))
 
-        # run style transfer
-        logger.debug("Starting style transfer on {}/{}".format(input_dir, input_frame))
-        style_transfer.stylize(
+        # run vehicle detection
+        logger.debug("Starting vehicle detection on {}/{}".format(input_dir, input_frame))
+        detect_vehicle.detect(
             content_scale=None,
             model_dir=os.path.join(mount_dir, model_dir),
             cuda=1 if torch.cuda.is_available() else 0,
@@ -84,7 +84,7 @@ def dequeue(bus_service, model_dir, queue, mount_dir, terminate=None):
             content_filename=input_frame,
             output_dir=output_dir,
         )
-        logger.debug("Finished style transfer on {}/{}".format(input_dir, input_frame))
+        logger.debug("Finished vehicle detection on {}/{}".format(input_dir, input_frame))
 
         # delete msg
         logger.debug("Deleting queue message...")
