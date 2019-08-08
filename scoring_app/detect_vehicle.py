@@ -188,6 +188,8 @@ if __name__ == "__main__":
     if args.cuda and not torch.cuda.is_available():
         print("ERROR: cuda is not available, try running on CPU")
         sys.exit(1)
+    if not os.path.exists(args.model_dir):
+        os.makedirs(args.model_dir)
 
     # set up logger
     console_handler = logging.StreamHandler(sys.stdout)

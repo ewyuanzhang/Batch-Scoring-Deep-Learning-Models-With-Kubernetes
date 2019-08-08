@@ -68,6 +68,7 @@ def _process(video):
     # service bus client
     bus_service = ServiceBusService(
         service_namespace=namespace,
+        host_base=".servicebus.chinacloudapi.cn",
         shared_access_key_name=sb_key_name,
         shared_access_key_value=sb_key_value,
     )

@@ -83,6 +83,7 @@ if __name__ == "__main__":
     # service bus client
     bus_service = ServiceBusService(
         service_namespace=args.namespace,
+        host_base=".servicebus.chinacloudapi.cn",
         shared_access_key_name=args.sb_key_name,
         shared_access_key_value=args.sb_key_value,
     )
